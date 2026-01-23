@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة العمر الذكية</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h2 { color: #1a73e8; }
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin: 20px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #1557b0; }
+        #result {
+            margin-top: 25px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #333;
+        }
+        .age-val { font-weight: bold; color: #1a73e8; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🗓️ احسب عمرك الآن</h2>
+    <p>أدخل تاريخ ميلادك لمعرفة عمرك بالتفصيل:</p>
+    <input type="date" id="birthdate">
+    <button onclick="calculateAge()">احسب العمر</button>
+    <div id="result"></div>
+</div>
+
+<script>
+    function calculateAge() {
+        const birthDateInput = document.getElementById('birthdate').value;
+        if (!birthDateInput) {
+            document.getElementById('result').innerHTML = "⚠️ يرجى اختيار تاريخ ميلادك.";
+            return;
+        }
+
+        const birthDate = new Date(birthDateInput);
+        const today = new Date();
+
+        let years = today.getFullYear() - birthDate.getFullYear();
+        let months = today.getMonth() - birthDate.getMonth();
+        let days = today.getDate() - birthDate.getDate();
+
+        if (days < 0) {
+            months--;
+            days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+        }
+        if (months < 0) {
+            years--;
+            months += 12;
+        }
+
+        document.getElementById('result').innerHTML = `
+            عمرك هو: <br>
+            <span class="age-val">${years}</span> سنة، 
+            <span class="age-val">${months}</span> شهر، و 
+            <span class="age-val">${days}</span> يوم.
+        `;
+    }
+</script>
+
+</body>
+</html>
