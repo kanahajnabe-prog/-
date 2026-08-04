@@ -24,7 +24,7 @@
 <body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-primary selection:text-white">
 
     <!-- شريط التنقل العلوي بزجاجية التصميم -->
-    <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
+    <header class="bg-slate-900/85 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
             <span class="text-xl font-black tracking-tight bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
                 Horizons<span class="text-white">.calc</span>
@@ -44,70 +44,50 @@
                         <a href="#financial" class="block px-4 py-2.5 text-xs text-slate-300 hover:bg-slate-800 hover:text-indigo-400">💰 الرهن العقاري والقروض</a>
                         <a href="#currencies" class="block px-4 py-2.5 text-xs text-slate-300 hover:bg-slate-800 hover:text-indigo-400">🌍 تحويل عملات الدول والأعلام</a>
                         <a href="#crypto" class="block px-4 py-2.5 text-xs text-slate-300 hover:bg-slate-800 hover:text-indigo-400">🪙 العملات الرقمية</a>
-                        <a href="#calories" class="block px-4 py-2.5 text-xs text-slate-300 hover:bg-slate-800 hover:text-indigo-400">🥗 السعرات الحرارية</a>
                         <a href="#age" class="block px-4 py-2.5 text-xs text-slate-300 hover:bg-slate-800 hover:text-indigo-400">⏳ حاسبة العمر الدقيق</a>
                     </div>
                 </div>
 
-                <a href="#search" class="hover:text-white transition">البحث الفوري</a>
+                <a href="#search" class="hover:text-white transition">البحث الذكي</a>
             </nav>
         </div>
     </header>
 
-    <!-- قسم البطل بتدرجات حيوية نبضية -->
-    <section id="home" class="relative overflow-hidden bg-gradient-to-b from-indigo-950/40 via-slate-950 to-slate-950 py-16 px-4 text-center border-b border-slate-900">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-transparent to-transparent pointer-events-none"></div>
+    <!-- قسم البطل -->
+    <section id="home" class="relative overflow-hidden bg-gradient-to-b from-indigo-950/40 via-slate-950 to-slate-950 py-12 px-4 text-center border-b border-slate-900">
         <div class="max-w-4xl mx-auto relative z-10">
-            <span class="inline-block py-1 px-3 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[11px] font-semibold mb-4">
-                ✨ الإصدار الحيوي الجديد 2026
+            <span class="inline-block py-1 px-3 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[11px] font-semibold mb-3">
+                ✨ نظام التصدير التفاعلي الذكي
             </span>
-            <h1 class="text-3xl sm:text-5xl font-extrabold mb-4 tracking-tight bg-gradient-to-r from-white via-slate-200 to-indigo-300 bg-clip-text text-transparent">
+            <h1 class="text-3xl sm:text-5xl font-extrabold mb-3 tracking-tight bg-gradient-to-r from-white via-slate-200 to-indigo-300 bg-clip-text text-transparent">
                 منصة الحاسبات والتحويلات الذكية
             </h1>
             <p class="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto">
-                تصميم عصري متفاعل، أداء سلس، ونتائج فورية لجميع احتياجاتك المالية والصحية واليومية.
+                اكتب ما تبحث عنه (مثل: عمر، قروض، عملات) ليتصدر الفورم المطلوب واجهة الموقع فوراً.
             </p>
         </div>
     </section>
 
     <!-- المحتوى الرئيسي -->
-    <main class="max-w-7xl mx-auto px-4 py-10 space-y-10">
+    <main class="max-w-7xl mx-auto px-4 py-8 space-y-8">
 
-        <!-- محرك البحث الفوري -->
-        <section id="search" class="bg-slate-900/60 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-slate-800/80">
+        <!-- محرك البحث الذكي -->
+        <section id="search" class="bg-slate-900/80 backdrop-blur-xl p-6 rounded-3xl shadow-2xl border border-indigo-500/30">
             <div class="text-center mb-4">
-                <h2 class="text-base font-bold text-white">البحث السريع عن الحاسبات</h2>
-                <p class="text-[11px] text-slate-400">اكتب ما تبحث عنه لتظهر النتيجة في الحال</p>
+                <h2 class="text-base font-bold text-white">البحث السريع وتصدير الحاسبات</h2>
+                <p class="text-[11px] text-slate-400">اكتب اسم الخدمة لتصعد إلى الواجهة في الأعلى وتحتها باقي المقترحات</p>
             </div>
-            <div class="relative max-w-xl mx-auto mb-4">
-                <input type="text" id="searchInput" oninput="filterCalculators()" placeholder="ابحث هنا (عملات، عمر، قروض، سعرات)..." class="w-full py-3 px-4 pr-11 rounded-2xl bg-slate-950 border border-slate-700/60 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition shadow-inner">
+            <div class="relative max-w-xl mx-auto">
+                <input type="text" id="searchInput" oninput="prioritizeCalculator()" placeholder="اكتب هنا (مثال: العمر، قروض، عملات)..." class="w-full py-3 px-4 pr-11 rounded-2xl bg-slate-950 border border-indigo-500/50 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition shadow-inner">
                 <span class="absolute right-4 top-3.5 text-slate-400">🔍</span>
-            </div>
-            <div id="searchResults" class="max-w-xl mx-auto bg-slate-950/80 rounded-xl border border-slate-800 divide-y divide-slate-800/60 overflow-hidden text-xs">
-                <div class="calc-item p-3 flex items-center justify-between hover:bg-slate-900/50 transition" data-name="حاسبة العملات والبلدان والأعلام والتحويل الدولي">
-                    <span class="font-bold text-slate-200">🌍 تحويل عملات الدول والأعلام</span>
-                    <a href="#currencies" class="text-indigo-400 font-semibold hover:underline">انتقل ←</a>
-                </div>
-                <div class="calc-item p-3 flex items-center justify-between hover:bg-slate-900/50 transition" data-name="حاسبة القروض والرهن العقاري مالية قسط">
-                    <span class="font-bold text-slate-200">💰 حاسبة القروض والرهن العقاري</span>
-                    <a href="#financial" class="text-indigo-400 font-semibold hover:underline">انتقل ←</a>
-                </div>
-                <div class="calc-item p-3 flex items-center justify-between hover:bg-slate-900/50 transition" data-name="حاسبة العملات الرقمية وتحويل بيتكوين">
-                    <span class="font-bold text-slate-200">🪙 حاسبة العملات الرقمية (من وإلى)</span>
-                    <a href="#crypto" class="text-indigo-400 font-semibold hover:underline">انتقل ←</a>
-                </div>
-                <div class="calc-item p-3 flex items-center justify-between hover:bg-slate-900/50 transition" data-name="حاسبة العمر الدقيق والتاريخ ميلاد زمن">
-                    <span class="font-bold text-slate-200">⏳ حاسبة العمر الدقيق والتاريخ</span>
-                    <a href="#age" class="text-indigo-400 font-semibold hover:underline">انتقل ←</a>
-                </div>
             </div>
         </section>
 
-        <!-- شبكة الحاسبات بتصميم عصري (Grid Layout) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- حاوية الحاسبات المتغيرة الترتيب (Container) -->
+        <div id="calculatorsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-            <!-- 1. الحاسبات المالية: القروض -->
-            <section id="financial" class="bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-indigo-500/50 transition duration-300">
+            <!-- 1. الرهن العقاري والقروض -->
+            <section id="financial" data-keywords="قروض رهن عقاري مالية قسط" class="calc-section bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-indigo-500/50 transition duration-300">
                 <h2 class="text-base font-extrabold text-white mb-4 flex items-center gap-2">
                     <span class="p-2 bg-indigo-500/10 rounded-xl text-indigo-400">💰</span> حاسبة الرهن العقاري والقروض
                 </h2>
@@ -132,8 +112,8 @@
                 </div>
             </section>
 
-            <!-- 2. حاسبة العملات الدولية (مع الأعلام والأسماء) -->
-            <section id="currencies" class="bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-cyan-500/50 transition duration-300">
+            <!-- 2. عملات البلدان والأعلام -->
+            <section id="currencies" data-keywords="عملات دول أعلام تحويل دولي" class="calc-section bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-cyan-500/50 transition duration-300">
                 <h2 class="text-base font-extrabold text-white mb-4 flex items-center gap-2">
                     <span class="p-2 bg-cyan-500/10 rounded-xl text-cyan-400">🌍</span> عملات البلدان والأعلام
                 </h2>
@@ -150,7 +130,7 @@
                                 <option value="SAR" selected>🇸🇦 ريال (SAR)</option>
                                 <option value="AED">🇦🇪 درهم (AED)</option>
                                 <option value="EGP">🇪🇬 جنيه (EGP)</option>
-                                <option value="EUR">🇪🇺 يورو (EUR)</option>
+                                <option value="EUR">🇺🇸 يورو (EUR)</option>
                                 <option value="GBP">🇬🇧 إسترليني (GBP)</option>
                                 <option value="KWD">🇰🇼 دينار كويتي</option>
                             </select>
@@ -162,7 +142,7 @@
                                 <option value="SAR">🇸🇦 ريال (SAR)</option>
                                 <option value="AED">🇦🇪 درهم (AED)</option>
                                 <option value="EGP">🇪🇬 جنيه (EGP)</option>
-                                <option value="EUR">🇪🇺 يورو (EUR)</option>
+                                <option value="EUR">🇺🇸 يورو (EUR)</option>
                                 <option value="GBP">🇬🇧 إسترليني (GBP)</option>
                                 <option value="KWD">🇰🇼 دينار كويتي</option>
                             </select>
@@ -176,8 +156,8 @@
                 </div>
             </section>
 
-            <!-- 3. حاسبة العملات الرقمية -->
-            <section id="crypto" class="bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-amber-500/50 transition duration-300">
+            <!-- 3. العملات الرقمية -->
+            <section id="crypto" data-keywords="عملات رقمية بيتكوين كريبتو" class="calc-section bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-amber-500/50 transition duration-300">
                 <h2 class="text-base font-extrabold text-white mb-4 flex items-center gap-2">
                     <span class="p-2 bg-amber-500/10 rounded-xl text-amber-400">🪙</span> تحويل العملات الرقمية
                 </h2>
@@ -214,8 +194,8 @@
                 </div>
             </section>
 
-            <!-- 4. حاسبة العمر الدقيق (بالرزنامة والسلاسة) -->
-            <section id="age" class="bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-purple-500/50 transition duration-300">
+            <!-- 4. العمر الدقيق -->
+            <section id="age" data-keywords="عمر تاريخ ميلاد سن" class="calc-section bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-purple-500/50 transition duration-300">
                 <h2 class="text-base font-extrabold text-white mb-4 flex items-center gap-2">
                     <span class="p-2 bg-purple-500/10 rounded-xl text-purple-400">⏳</span> حاسبة العمر الدقيق والتاريخ
                 </h2>
@@ -241,6 +221,43 @@
 
     <!-- البرمجيات التفاعلية -->
     <script>
+        // دالة تصدير الحاسبة المطلوبة للأعلى عند البحث
+        function prioritizeCalculator() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const container = document.getElementById('calculatorsContainer');
+            const sections = Array.from(container.getElementsByClassName('calc-section'));
+
+            if (!query) {
+                // إرجاع الترتيب الطبيعي إذا فرغ حقل البحث
+                return;
+            }
+
+            // إعادة ترتيب العناصر بحيث تتصدر المطابقة الواجهة
+            sections.sort((a, b) => {
+                const keywordsA = a.getAttribute('data-keywords').toLowerCase();
+                const keywordsB = b.getAttribute('data-keywords').toLowerCase();
+                
+                const matchA = keywordsA.includes(query) ? 1 : 0;
+                const matchB = keywordsB.includes(query) ? 1 : 0;
+                
+                return matchB - matchA; // العنصر المتطابق يأتي أولاً
+            });
+
+            // تطبيق الترتيب الجديد وإضافة تأثير بصري مميز للعنصر المتصدر
+            sections.forEach((section, index) => {
+                container.appendChild(section);
+                const keywords = section.getAttribute('data-keywords').toLowerCase();
+                if (keywords.includes(query)) {
+                    section.classList.add('ring-2', 'ring-indigo-500', 'shadow-indigo-500/20', 'scale-[1.01]');
+                    setTimeout(() => {
+                        section.classList.remove('scale-[1.01]');
+                    }, 400);
+                } else {
+                    section.classList.remove('ring-2', 'ring-indigo-500', 'shadow-indigo-500/20');
+                }
+            });
+        }
+
         const currencyRates = { USD: 1.0, SAR: 3.75, AED: 3.67, EGP: 48.5, EUR: 0.92, GBP: 0.78, KWD: 0.31 };
 
         function convertCurrency() {
@@ -282,15 +299,6 @@
             if (event.key === 'Backspace' && event.target.value === '' && prevFieldId) {
                 document.getElementById(prevFieldId).focus();
             }
-        }
-
-        function filterCalculators() {
-            const query = document.getElementById('searchInput').value.toLowerCase().trim();
-            const items = document.querySelectorAll('.calc-item');
-            items.forEach(item => {
-                const keywords = item.getAttribute('data-name').toLowerCase();
-                item.style.display = keywords.includes(query) ? 'flex' : 'none';
-            });
         }
 
         function calculateLoan() {
