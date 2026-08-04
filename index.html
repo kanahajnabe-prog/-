@@ -63,7 +63,7 @@
                 منصة الحاسبات والتحويلات الذكية
             </h1>
             <p class="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto">
-                اكتب ما تبحث عنه (مثل: عمر، قروض، عملات) ليتصدر الفورم المطلوب واجهة الموقع فوراً.
+                اكتب ما تبحث عنه (مثل: عمر، قروض، عملات) ليتصدر الفورم الواجهة ويأخذ المساحة الكاملة فوراً.
             </p>
         </div>
     </section>
@@ -75,7 +75,7 @@
         <section id="search" class="bg-slate-900/80 backdrop-blur-xl p-6 rounded-3xl shadow-2xl border border-indigo-500/30">
             <div class="text-center mb-4">
                 <h2 class="text-base font-bold text-white">البحث السريع وتصدير الحاسبات</h2>
-                <p class="text-[11px] text-slate-400">اكتب اسم الخدمة لتصعد إلى الواجهة في الأعلى وتحتها باقي المقترحات</p>
+                <p class="text-[11px] text-slate-400">اكتب اسم الخدمة لتصعد بمفردها إلى الواجهة في الأعلى وتحتها باقي المقترحات</p>
             </div>
             <div class="relative max-w-xl mx-auto">
                 <input type="text" id="searchInput" oninput="prioritizeCalculator()" placeholder="اكتب هنا (مثال: العمر، قروض، عملات)..." class="w-full py-3 px-4 pr-11 rounded-2xl bg-slate-950 border border-indigo-500/50 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition shadow-inner">
@@ -83,7 +83,7 @@
             </div>
         </section>
 
-        <!-- حاوية الحاسبات المتغيرة الترتيب (Container) -->
+        <!-- حاوية الحاسبات (Grid Layout) -->
         <div id="calculatorsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
             <!-- 1. الرهن العقاري والقروض -->
@@ -130,7 +130,7 @@
                                 <option value="SAR" selected>🇸🇦 ريال (SAR)</option>
                                 <option value="AED">🇦🇪 درهم (AED)</option>
                                 <option value="EGP">🇪🇬 جنيه (EGP)</option>
-                                <option value="EUR">🇺🇸 يورو (EUR)</option>
+                                <option value="EUR">🇪🇺 يورو (EUR)</option>
                                 <option value="GBP">🇬🇧 إسترليني (GBP)</option>
                                 <option value="KWD">🇰🇼 دينار كويتي</option>
                             </select>
@@ -142,7 +142,7 @@
                                 <option value="SAR">🇸🇦 ريال (SAR)</option>
                                 <option value="AED">🇦🇪 درهم (AED)</option>
                                 <option value="EGP">🇪🇬 جنيه (EGP)</option>
-                                <option value="EUR">🇺🇸 يورو (EUR)</option>
+                                <option value="EUR">🇪🇺 يورو (EUR)</option>
                                 <option value="GBP">🇬🇧 إسترليني (GBP)</option>
                                 <option value="KWD">🇰🇼 دينار كويتي</option>
                             </select>
@@ -194,7 +194,7 @@
                 </div>
             </section>
 
-            <!-- 4. العمر الدقيق -->
+            <!-- 4. العمر الدقيق (معدل بالتصميم والترتيب العربي الصحيح) -->
             <section id="age" data-keywords="عمر تاريخ ميلاد سن" class="calc-section bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-purple-500/50 transition duration-300">
                 <h2 class="text-base font-extrabold text-white mb-4 flex items-center gap-2">
                     <span class="p-2 bg-purple-500/10 rounded-xl text-purple-400">⏳</span> حاسبة العمر الدقيق والتاريخ
@@ -202,11 +202,11 @@
                 <div class="space-y-3 text-xs">
                     <label class="block font-semibold text-slate-300">تاريخ الميلاد (يوم / شهر / سنة):</label>
                     <div class="flex items-center justify-center space-x-2 space-x-reverse border border-slate-700/60 rounded-2xl p-2 bg-slate-950 focus-within:ring-2 focus-within:ring-purple-500 max-w-xs mx-auto">
-                        <input type="text" id="dayInput" maxlength="2" placeholder="DD" oninput="autoTab(this, 'monthInput', 31)" onkeydown="handleBackspace(event, null)" class="w-12 text-center bg-transparent focus:outline-none text-sm font-bold text-white">
+                        <input type="text" id="yearInput" maxlength="4" placeholder="السنة" oninput="autoTab(this, 'monthInput', 2026)" onkeydown="handleBackspace(event, null)" class="w-16 text-center bg-transparent focus:outline-none text-sm font-bold text-white">
                         <span class="text-slate-600 font-bold">/</span>
-                        <input type="text" id="monthInput" maxlength="2" placeholder="MM" oninput="autoTab(this, 'yearInput', 12)" onkeydown="handleBackspace(event, 'dayInput')" class="w-12 text-center bg-transparent focus:outline-none text-sm font-bold text-white">
+                        <input type="text" id="monthInput" maxlength="2" placeholder="الشهر" oninput="autoTab(this, 'dayInput', 12)" onkeydown="handleBackspace(event, 'yearInput')" class="w-12 text-center bg-transparent focus:outline-none text-sm font-bold text-white">
                         <span class="text-slate-600 font-bold">/</span>
-                        <input type="text" id="yearInput" maxlength="4" placeholder="YYYY" oninput="autoTab(this, null, 2026)" onkeydown="handleBackspace(event, 'monthInput')" class="w-16 text-center bg-transparent focus:outline-none text-sm font-bold text-white">
+                        <input type="text" id="dayInput" maxlength="2" placeholder="اليوم" oninput="autoTab(this, null, 31)" onkeydown="handleBackspace(event, 'monthInput')" class="w-12 text-center bg-transparent focus:outline-none text-sm font-bold text-white">
                     </div>
                     <button onclick="calculateAge()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-purple-500/20">احسب العمر بدقة</button>
                     <div class="p-3 bg-slate-950/60 rounded-xl text-center border border-slate-800">
@@ -221,39 +221,31 @@
 
     <!-- البرمجيات التفاعلية -->
     <script>
-        // دالة تصدير الحاسبة المطلوبة للأعلى عند البحث
+        // دالة تصدير الحاسبة المطلوبة للأعلى وجعلها تأخذ العرض الكامل
         function prioritizeCalculator() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
             const container = document.getElementById('calculatorsContainer');
             const sections = Array.from(container.getElementsByClassName('calc-section'));
 
-            if (!query) {
-                // إرجاع الترتيب الطبيعي إذا فرغ حقل البحث
-                return;
-            }
+            // إزالة التنسيق السابق للعرض الكامل من الكل
+            sections.forEach(sec => sec.classList.remove('md:col-span-2', 'ring-2', 'ring-indigo-500', 'shadow-indigo-500/20'));
 
-            // إعادة ترتيب العناصر بحيث تتصدر المطابقة الواجهة
+            if (!query) return;
+
             sections.sort((a, b) => {
                 const keywordsA = a.getAttribute('data-keywords').toLowerCase();
                 const keywordsB = b.getAttribute('data-keywords').toLowerCase();
-                
                 const matchA = keywordsA.includes(query) ? 1 : 0;
                 const matchB = keywordsB.includes(query) ? 1 : 0;
-                
-                return matchB - matchA; // العنصر المتطابق يأتي أولاً
+                return matchB - matchA;
             });
 
-            // تطبيق الترتيب الجديد وإضافة تأثير بصري مميز للعنصر المتصدر
             sections.forEach((section, index) => {
                 container.appendChild(section);
                 const keywords = section.getAttribute('data-keywords').toLowerCase();
                 if (keywords.includes(query)) {
-                    section.classList.add('ring-2', 'ring-indigo-500', 'shadow-indigo-500/20', 'scale-[1.01]');
-                    setTimeout(() => {
-                        section.classList.remove('scale-[1.01]');
-                    }, 400);
-                } else {
-                    section.classList.remove('ring-2', 'ring-indigo-500', 'shadow-indigo-500/20');
+                    // جعل العنصر المتصدر يأخذ عرض الشاشة الكامل بالصف (col-span-2)
+                    section.classList.add('md:col-span-2', 'ring-2', 'ring-indigo-500', 'shadow-indigo-500/20');
                 }
             });
         }
@@ -284,14 +276,8 @@
 
         function autoTab(current, nextFieldId, maxVal) {
             current.value = current.value.replace(/\D/g, '');
-            if (current.value.length >= 2 && nextFieldId) {
-                let val = parseInt(current.value);
-                if (maxVal === 31 && (val < 1 || val > 31)) { current.value = "31"; }
-                if (maxVal === 12 && (val < 1 || val > 12)) { current.value = "12"; }
+            if (current.value.length >= (current.id === 'yearInput' ? 4 : 2) && nextFieldId) {
                 document.getElementById(nextFieldId).focus();
-            } else if (current.value.length === 4 && nextFieldId === null) {
-                let val = parseInt(current.value);
-                if (val > 2026) current.value = 2026;
             }
         }
 
