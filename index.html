@@ -63,7 +63,7 @@
                 منصة الحاسبات والتحويلات الذكية
             </h1>
             <p class="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto">
-                اكتب ما تبحث عنه (مثل: عمر، قروض، عملات) ليتصدر الفورم الواجهة ويأخذ المساحة الكاملة فوراً.
+                اكتب ما تبحث عنه (مثل: عمر، قروض، عملات) لتتصدر الحاسبة المطلوبة واجهة الموقع فوراً بمفردها.
             </p>
         </div>
     </section>
@@ -72,182 +72,218 @@
     <main class="max-w-7xl mx-auto px-4 py-8 space-y-8">
 
         <!-- محرك البحث الذكي -->
-        <section id="search" class="bg-slate-900/80 backdrop-blur-xl p-6 rounded-3xl shadow-2xl border border-indigo-500/30">
+        <section id="search" class="bg-slate-900/80 backdrop-blur-xl p-6 rounded-3xl shadow-2xl border border-indigo-500/35">
             <div class="text-center mb-4">
                 <h2 class="text-base font-bold text-white">البحث السريع وتصدير الحاسبات</h2>
-                <p class="text-[11px] text-slate-400">اكتب اسم الخدمة لتصعد بمفردها إلى الواجهة في الأعلى وتحتها باقي المقترحات</p>
+                <p class="text-[11px] text-slate-400">اكتب اسم الخدمة (عمر، قروض، عملات) لتصعد إلى واجهة الموقع في المقدمة</p>
             </div>
             <div class="relative max-w-xl mx-auto">
-                <input type="text" id="searchInput" oninput="prioritizeCalculator()" placeholder="اكتب هنا (مثال: العمر، قروض، عملات)..." class="w-full py-3 px-4 pr-11 rounded-2xl bg-slate-950 border border-indigo-500/50 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition shadow-inner">
+                <input type="text" id="searchInput" oninput="prioritizeCalculator()" placeholder="اكتب هنا ما تبحث عنه..." class="w-full py-3 px-4 pr-11 rounded-2xl bg-slate-950 border border-indigo-500/50 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition shadow-inner">
                 <span class="absolute right-4 top-3.5 text-slate-400">🔍</span>
             </div>
         </section>
 
-        <!-- حاوية الحاسبات (Grid Layout) -->
-        <div id="calculatorsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- حاوية الحاسبات (Flexbox لضمان سهولة إعادة الترتيب المطلق) -->
+        <div id="calculatorsContainer" class="flex flex-col gap-6">
 
-            <!-- 1. الرهن العقاري والقروض -->
-            <section id="financial" data-keywords="قروض رهن عقاري مالية قسط" class="calc-section bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-indigo-500/50 transition duration-300">
-                <h2 class="text-base font-extrabold text-white mb-4 flex items-center gap-2">
-                    <span class="p-2 bg-indigo-500/10 rounded-xl text-indigo-400">💰</span> حاسبة الرهن العقاري والقروض
-                </h2>
-                <div class="space-y-3 text-xs">
-                    <div>
-                        <label class="block font-semibold text-slate-300 mb-1">مبلغ القرض:</label>
-                        <input type="number" id="loanAmount" placeholder="500000" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-indigo-500">
-                    </div>
-                    <div>
-                        <label class="block font-semibold text-slate-300 mb-1">نسبة الفائدة (%):</label>
-                        <input type="number" step="0.1" id="interestRate" placeholder="5.5" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-indigo-500">
-                    </div>
-                    <div>
-                        <label class="block font-semibold text-slate-300 mb-1">المدة (سنوات):</label>
-                        <input type="number" id="loanTerm" placeholder="20" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-indigo-500">
-                    </div>
-                    <button onclick="calculateLoan()" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-indigo-500/20">احسب القسط الشهري</button>
-                    <div class="p-3 bg-slate-950/60 rounded-xl text-center border border-slate-800">
-                        <span class="text-slate-400 block mb-1">القسط الشهري المتوقع:</span>
-                        <strong id="monthlyPayment" class="text-indigo-400 text-base">--</strong>
-                    </div>
-                </div>
-            </section>
+            <!-- الصف الأول: سيحتوي ديناميكياً على الحاسبة المتصدرة عند البحث، أو أول حاسبتين افتراضياً -->
+            <div id="topRow" class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
 
-            <!-- 2. عملات البلدان والأعلام -->
-            <section id="currencies" data-keywords="عملات دول أعلام تحويل دولي" class="calc-section bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-cyan-500/50 transition duration-300">
-                <h2 class="text-base font-extrabold text-white mb-4 flex items-center gap-2">
-                    <span class="p-2 bg-cyan-500/10 rounded-xl text-cyan-400">🌍</span> عملات البلدان والأعلام
-                </h2>
-                <div class="space-y-3 text-xs">
-                    <div>
-                        <label class="block font-semibold text-slate-300 mb-1">المبلغ:</label>
-                        <input type="number" id="currAmount" placeholder="100" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-cyan-500">
-                    </div>
-                    <div class="grid grid-cols-2 gap-2">
+                <!-- 1. الرهن العقاري والقروض -->
+                <section id="card-financial" data-keywords="قروض رهن عقاري مالية قسط" class="calc-section bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-indigo-500/50 transition duration-300">
+                    <h2 class="text-base font-extrabold text-white mb-4 flex items-center gap-2">
+                        <span class="p-2 bg-indigo-500/10 rounded-xl text-indigo-400">💰</span> حاسبة الرهن العقاري والقروض
+                    </h2>
+                    <div class="space-y-3 text-xs">
                         <div>
-                            <label class="block font-semibold text-slate-300 mb-1">من:</label>
-                            <select id="fromCurr" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-cyan-500">
-                                <option value="USD">🇺🇸 دولار (USD)</option>
-                                <option value="SAR" selected>🇸🇦 ريال (SAR)</option>
-                                <option value="AED">🇦🇪 درهم (AED)</option>
-                                <option value="EGP">🇪🇬 جنيه (EGP)</option>
-                                <option value="EUR">🇪🇺 يورو (EUR)</option>
-                                <option value="GBP">🇬🇧 إسترليني (GBP)</option>
-                                <option value="KWD">🇰🇼 دينار كويتي</option>
-                            </select>
+                            <label class="block font-semibold text-slate-300 mb-1">مبلغ القرض:</label>
+                            <input type="number" id="loanAmount" placeholder="500000" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-indigo-500">
                         </div>
                         <div>
-                            <label class="block font-semibold text-slate-300 mb-1">إلى:</label>
-                            <select id="toCurr" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-cyan-500">
-                                <option value="USD" selected>🇺🇸 دولار (USD)</option>
-                                <option value="SAR">🇸🇦 ريال (SAR)</option>
-                                <option value="AED">🇦🇪 درهم (AED)</option>
-                                <option value="EGP">🇪🇬 جنيه (EGP)</option>
-                                <option value="EUR">🇪🇺 يورو (EUR)</option>
-                                <option value="GBP">🇬🇧 إسترليني (GBP)</option>
-                                <option value="KWD">🇰🇼 دينار كويتي</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button onclick="convertCurrency()" class="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-cyan-500/20">تحويل العملة الدولية</button>
-                    <div class="p-3 bg-slate-950/60 rounded-xl text-center border border-slate-800">
-                        <span class="text-slate-400 block mb-1">النتيجة:</span>
-                        <strong id="currResult" class="text-cyan-400 text-base">--</strong>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 3. العملات الرقمية -->
-            <section id="crypto" data-keywords="عملات رقمية بيتكوين كريبتو" class="calc-section bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-amber-500/50 transition duration-300">
-                <h2 class="text-base font-extrabold text-white mb-4 flex items-center gap-2">
-                    <span class="p-2 bg-amber-500/10 rounded-xl text-amber-400">🪙</span> تحويل العملات الرقمية
-                </h2>
-                <div class="space-y-3 text-xs">
-                    <div>
-                        <label class="block font-semibold text-slate-300 mb-1">المبلغ:</label>
-                        <input type="number" id="cryptoAmount" placeholder="1" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-amber-500">
-                    </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <div>
-                            <label class="block font-semibold text-slate-300 mb-1">من عملة:</label>
-                            <select id="fromCrypto" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-amber-500">
-                                <option value="BTC">Bitcoin (BTC)</option>
-                                <option value="ETH">Ethereum (ETH)</option>
-                                <option value="USDT" selected>Tether (USDT)</option>
-                                <option value="BNB">Binance (BNB)</option>
-                            </select>
+                            <label class="block font-semibold text-slate-300 mb-1">نسبة الفائدة (%):</label>
+                            <input type="number" step="0.1" id="interestRate" placeholder="5.5" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-indigo-500">
                         </div>
                         <div>
-                            <label class="block font-semibold text-slate-300 mb-1">إلى عملة:</label>
-                            <select id="toCrypto" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-amber-500">
-                                <option value="USD" selected>US Dollar (USD)</option>
-                                <option value="BTC">Bitcoin (BTC)</option>
-                                <option value="ETH">Ethereum (ETH)</option>
-                                <option value="USDT">Tether (USDT)</option>
-                            </select>
+                            <label class="block font-semibold text-slate-300 mb-1">المدة (سنوات):</label>
+                            <input type="number" id="loanTerm" placeholder="20" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <button onclick="calculateLoan()" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-indigo-500/20">احسب القسط الشهري</button>
+                        <div class="p-3 bg-slate-950/60 rounded-xl text-center border border-slate-800">
+                            <span class="text-slate-400 block mb-1">القسط الشهري المتوقع:</span>
+                            <strong id="monthlyPayment" class="text-indigo-400 text-base">--</strong>
                         </div>
                     </div>
-                    <button onclick="convertCrypto()" class="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-amber-500/20">تحويل العملة الرقمية</button>
-                    <div class="p-3 bg-slate-950/60 rounded-xl text-center border border-slate-800">
-                        <span class="text-slate-400 block mb-1">النتيجة:</span>
-                        <strong id="cryptoResult" class="text-amber-400 text-base">--</strong>
-                    </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- 4. العمر الدقيق (معدل بالتصميم والترتيب العربي الصحيح) -->
-            <section id="age" data-keywords="عمر تاريخ ميلاد سن" class="calc-section bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-purple-500/50 transition duration-300">
-                <h2 class="text-base font-extrabold text-white mb-4 flex items-center gap-2">
-                    <span class="p-2 bg-purple-500/10 rounded-xl text-purple-400">⏳</span> حاسبة العمر الدقيق والتاريخ
-                </h2>
-                <div class="space-y-3 text-xs">
-                    <label class="block font-semibold text-slate-300">تاريخ الميلاد (يوم / شهر / سنة):</label>
-                    <div class="flex items-center justify-center space-x-2 space-x-reverse border border-slate-700/60 rounded-2xl p-2 bg-slate-950 focus-within:ring-2 focus-within:ring-purple-500 max-w-xs mx-auto">
-                        <input type="text" id="yearInput" maxlength="4" placeholder="السنة" oninput="autoTab(this, 'monthInput', 2026)" onkeydown="handleBackspace(event, null)" class="w-16 text-center bg-transparent focus:outline-none text-sm font-bold text-white">
-                        <span class="text-slate-600 font-bold">/</span>
-                        <input type="text" id="monthInput" maxlength="2" placeholder="الشهر" oninput="autoTab(this, 'dayInput', 12)" onkeydown="handleBackspace(event, 'yearInput')" class="w-12 text-center bg-transparent focus:outline-none text-sm font-bold text-white">
-                        <span class="text-slate-600 font-bold">/</span>
-                        <input type="text" id="dayInput" maxlength="2" placeholder="اليوم" oninput="autoTab(this, null, 31)" onkeydown="handleBackspace(event, 'monthInput')" class="w-12 text-center bg-transparent focus:outline-none text-sm font-bold text-white">
+                <!-- 2. عملات البلدان والأعلام -->
+                <section id="card-currencies" data-keywords="عملات دول أعلام تحويل دولي" class="calc-section bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-cyan-500/50 transition duration-300">
+                    <h2 class="text-base font-extrabold text-white mb-4 flex items-center gap-2">
+                        <span class="p-2 bg-cyan-500/10 rounded-xl text-cyan-400">🌍</span> عملات البلدان والأعلام
+                    </h2>
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <label class="block font-semibold text-slate-300 mb-1">المبلغ:</label>
+                            <input type="number" id="currAmount" placeholder="100" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-cyan-500">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block font-semibold text-slate-300 mb-1">من:</label>
+                                <select id="fromCurr" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-cyan-500">
+                                    <option value="USD">🇺🇸 دولار (USD)</option>
+                                    <option value="SAR" selected>🇸🇦 ريال (SAR)</option>
+                                    <option value="AED">🇦🇪 درهم (AED)</option>
+                                    <option value="EGP">🇪🇬 جنيه (EGP)</option>
+                                    <option value="EUR">🇪🇺 يورو (EUR)</option>
+                                    <option value="GBP">🇬🇧 إسترليني (GBP)</option>
+                                    <option value="KWD">🇰🇼 دينار كويتي</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-300 mb-1">إلى:</label>
+                                <select id="toCurr" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-cyan-500">
+                                    <option value="USD" selected>🇺🇸 دولار (USD)</option>
+                                    <option value="SAR">🇸🇦 ريال (SAR)</option>
+                                    <option value="AED">🇦🇪 درهم (AED)</option>
+                                    <option value="EGP">🇪🇬 جنيه (EGP)</option>
+                                    <option value="EUR">🇪🇺 يورو (EUR)</option>
+                                    <option value="GBP">🇬🇧 إسترليني (GBP)</option>
+                                    <option value="KWD">🇰🇼 دينار كويتي</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="convertCurrency()" class="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-cyan-500/20">تحويل العملة الدولية</button>
+                        <div class="p-3 bg-slate-950/60 rounded-xl text-center border border-slate-800">
+                            <span class="text-slate-400 block mb-1">النتيجة:</span>
+                            <strong id="currResult" class="text-cyan-400 text-base">--</strong>
+                        </div>
                     </div>
-                    <button onclick="calculateAge()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-purple-500/20">احسب العمر بدقة</button>
-                    <div class="p-3 bg-slate-950/60 rounded-xl text-center border border-slate-800">
-                        <span class="text-slate-400 block mb-1">عمرك التفصيلي:</span>
-                        <strong id="ageResult" class="text-purple-400 text-sm">--</strong>
+                </section>
+
+            </div>
+
+            <!-- الصف الثاني -->
+            <div id="bottomRow" class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+
+                <!-- 3. العملات الرقمية -->
+                <section id="card-crypto" data-keywords="عملات رقمية بيتكوين كريبتو" class="calc-section bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-amber-500/50 transition duration-300">
+                    <h2 class="text-base font-extrabold text-white mb-4 flex items-center gap-2">
+                        <span class="p-2 bg-amber-500/10 rounded-xl text-amber-400">🪙</span> تحويل العملات الرقمية
+                    </h2>
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <label class="block font-semibold text-slate-300 mb-1">المبلغ:</label>
+                            <input type="number" id="cryptoAmount" placeholder="1" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block font-semibold text-slate-300 mb-1">من عملة:</label>
+                                <select id="fromCrypto" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-amber-500">
+                                    <option value="BTC">Bitcoin (BTC)</option>
+                                    <option value="ETH">Ethereum (ETH)</option>
+                                    <option value="USDT" selected>Tether (USDT)</option>
+                                    <option value="BNB">Binance (BNB)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-300 mb-1">إلى عملة:</label>
+                                <select id="toCrypto" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/60 text-white focus:ring-2 focus:ring-amber-500">
+                                    <option value="USD" selected>US Dollar (USD)</option>
+                                    <option value="BTC">Bitcoin (BTC)</option>
+                                    <option value="ETH">Ethereum (ETH)</option>
+                                    <option value="USDT">Tether (USDT)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="convertCrypto()" class="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-amber-500/20">تحويل العملة الرقمية</button>
+                        <div class="p-3 bg-slate-950/60 rounded-xl text-center border border-slate-800">
+                            <span class="text-slate-400 block mb-1">النتيجة:</span>
+                            <strong id="cryptoResult" class="text-amber-400 text-base">--</strong>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+
+                <!-- 4. العمر الدقيق -->
+                <section id="card-age" data-keywords="عمر تاريخ ميلاد سن" class="calc-section bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-800/80 p-6 hover:border-purple-500/50 transition duration-300">
+                    <h2 class="text-base font-extrabold text-white mb-4 flex items-center gap-2">
+                        <span class="p-2 bg-purple-500/10 rounded-xl text-purple-400">⏳</span> حاسبة العمر الدقيق والتاريخ
+                    </h2>
+                    <div class="space-y-3 text-xs">
+                        <label class="block font-semibold text-slate-300">تاريخ الميلاد (يوم / شهر / سنة):</label>
+                        <div class="flex items-center justify-center space-x-2 space-x-reverse border border-slate-700/60 rounded-2xl p-2 bg-slate-950 focus-within:ring-2 focus-within:ring-purple-500 max-w-xs mx-auto">
+                            <input type="text" id="yearInput" maxlength="4" placeholder="السنة" class="w-16 text-center bg-transparent focus:outline-none text-sm font-bold text-white">
+                            <span class="text-slate-600 font-bold">/</span>
+                            <input type="text" id="monthInput" maxlength="2" placeholder="الشهر" class="w-12 text-center bg-transparent focus:outline-none text-sm font-bold text-white">
+                            <span class="text-slate-600 font-bold">/</span>
+                            <input type="text" id="dayInput" maxlength="2" placeholder="اليوم" class="w-12 text-center bg-transparent focus:outline-none text-sm font-bold text-white">
+                        </div>
+                        <button onclick="calculateAge()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-purple-500/20">احسب العمر بدقة</button>
+                        <div class="p-3 bg-slate-950/60 rounded-xl text-center border border-slate-800">
+                            <span class="text-slate-400 block mb-1">عمرك التفصيلي:</span>
+                            <strong id="ageResult" class="text-purple-400 text-sm">--</strong>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
 
         </div>
     </main>
 
     <!-- البرمجيات التفاعلية -->
     <script>
-        // دالة تصدير الحاسبة المطلوبة للأعلى وجعلها تأخذ العرض الكامل
+        // دالة الذكاء الاصطناعي لتصدير الحاسبة المطلوبة في الواجهة الرئيسية وحدها بالعرض الكامل
         function prioritizeCalculator() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
-            const container = document.getElementById('calculatorsContainer');
-            const sections = Array.from(container.getElementsByClassName('calc-section'));
+            const topRow = document.getElementById('topRow');
+            const bottomRow = document.getElementById('bottomRow');
+            
+            // جمع كافة بطاقات الحاسبات
+            const allCards = Array.from(document.querySelectorAll('.calc-section'));
 
-            // إزالة التنسيق السابق للعرض الكامل من الكل
-            sections.forEach(sec => sec.classList.remove('md:col-span-2', 'ring-2', 'ring-indigo-500', 'shadow-indigo-500/20'));
-
-            if (!query) return;
-
-            sections.sort((a, b) => {
-                const keywordsA = a.getAttribute('data-keywords').toLowerCase();
-                const keywordsB = b.getAttribute('data-keywords').toLowerCase();
-                const matchA = keywordsA.includes(query) ? 1 : 0;
-                const matchB = keywordsB.includes(query) ? 1 : 0;
-                return matchB - matchA;
+            // إزالة كلاس العرض الكامل والتأثيرات من الجميع أولاً
+            allCards.forEach(card => {
+                card.classList.remove('col-span-full', 'ring-2', 'ring-indigo-500', 'shadow-indigo-500/30', 'scale-[1.01]');
             });
 
-            sections.forEach((section, index) => {
-                container.appendChild(section);
-                const keywords = section.getAttribute('data-keywords').toLowerCase();
+            if (!query) {
+                // إرجاع الترتيب الافتراضي إذا تم مسح حقل البحث
+                topRow.innerHTML = '';
+                bottomRow.innerHTML = '';
+                topRow.appendChild(document.getElementById('card-financial'));
+                topRow.appendChild(document.getElementById('card-currencies'));
+                bottomRow.appendChild(document.getElementById('card-crypto'));
+                bottomRow.appendChild(document.getElementById('card-age'));
+                topRow.className = "grid grid-cols-1 md:grid-cols-2 gap-6 w-full";
+                return;
+            }
+
+            // البحث عن الحاسبة المطابقة للكلمة المفتاحية
+            let matchedCard = null;
+            let otherCards = [];
+
+            allCards.forEach(card => {
+                const keywords = card.getAttribute('data-keywords').toLowerCase();
                 if (keywords.includes(query)) {
-                    // جعل العنصر المتصدر يأخذ عرض الشاشة الكامل بالصف (col-span-2)
-                    section.classList.add('md:col-span-2', 'ring-2', 'ring-indigo-500', 'shadow-indigo-500/20');
+                    matchedCard = card;
+                } else {
+                    otherCards.push(card);
                 }
             });
+
+            if (matchedCard) {
+                // تحويل الصف الأول إلى عمود واحد بعرض الشاشة الكامل (col-span-full) وجعل البطظمة تتصدر الواجهة
+                topRow.innerHTML = '';
+                topRow.className = "w-full flex justify-center"; // توسيع الحاوية
+                matchedCard.classList.add('col-span-full', 'w-full', 'ring-2', 'ring-indigo-500', 'shadow-indigo-500/30');
+                topRow.appendChild(matchedCard);
+
+                // وضع باقي البطاقات في الصف الثاني بترتيب شبكي طبيعي
+                bottomRow.innerHTML = '';
+                bottomRow.className = "grid grid-cols-1 md:grid-cols-2 gap-6 w-full";
+                otherCards.forEach(card => {
+                    bottomRow.appendChild(card);
+                });
+            }
         }
 
         const currencyRates = { USD: 1.0, SAR: 3.75, AED: 3.67, EGP: 48.5, EUR: 0.92, GBP: 0.78, KWD: 0.31 };
@@ -272,19 +308,6 @@
             const valueInUSD = amount * cryptoPrices[from];
             const result = valueInUSD / cryptoPrices[to];
             document.getElementById('cryptoResult').innerText = `${result.toFixed(4)} ${to}`;
-        }
-
-        function autoTab(current, nextFieldId, maxVal) {
-            current.value = current.value.replace(/\D/g, '');
-            if (current.value.length >= (current.id === 'yearInput' ? 4 : 2) && nextFieldId) {
-                document.getElementById(nextFieldId).focus();
-            }
-        }
-
-        function handleBackspace(event, prevFieldId) {
-            if (event.key === 'Backspace' && event.target.value === '' && prevFieldId) {
-                document.getElementById(prevFieldId).focus();
-            }
         }
 
         function calculateLoan() {
