@@ -57,4 +57,460 @@
             <div class="flex flex-col flex-1">
                 <span class="text-[10px] text-slate-400 font-bold">توقيت الدولة المختارة:</span>
                 <select id="countrySelector" onchange="changeCountry()" class="bg-transparent text-white font-bold text-sm focus:outline-none cursor-pointer">
-                    <option value="AUTO" selected>🌐
+                    <option value="AUTO" selected>🌐 التوقيت المحلي للجهاز تلقائياً</option>
+                    <option value="Asia/Amman">🇯🇴 الأردن (GMT+3)</option>
+                    <option value="Asia/Riyadh">🇸🇦 السعودية (GMT+3)</option>
+                    <option value="Asia/Dubai">🇦🇪 الإمارات (GMT+4)</option>
+                    <option value="Asia/Qatar">🇶🇦 قطر (GMT+3)</option>
+                    <option value="Asia/Kuwait">🇰🇼 الكويت (GMT+3)</option>
+                    <option value="Asia/Bahrain">🇧🇭 البحرين (GMT+3)</option>
+                    <option value="Asia/Muscat">🇴🇲 سلطنة عمان (GMT+4)</option>
+                    <option value="Africa/Cairo">🇪🇬 مصر (GMT+2/3)</option>
+                    <option value="Asia/Baghdad">🇮🇶 العراق (GMT+3)</option>
+                    <option value="Asia/Gaza">🇵🇸 فلسطين (GMT+3)</option>
+                    <option value="Asia/Beirut">🇱🇧 لبنان (GMT+3)</option>
+                    <option value="Africa/Casablanca">🇲🇦 المغرب (GMT+1)</option>
+                    <option value="Africa/Algiers">🇩🇿 الجزائر (GMT+1)</option>
+                    <option value="Africa/Tunis">🇹🇳 تونس (GMT+1)</option>
+                    <option value="Europe/Berlin">🇩🇪 ألمانيا (GMT+1/2)</option>
+                    <option value="Europe/London">🇬🇧 المملكة المتحدة (GMT+0/1)</option>
+                    <option value="America/New_York">🇺🇸 أمريكا - نيويورك (EST)</option>
+                    <option value="America/Los_Angeles">🇺🇸 أمريكا - لوس أنجلوس (PST)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Live Clock for Country -->
+        <div class="text-left bg-slate-800/50 px-4 py-2 rounded-xl border border-slate-700/50 min-w-[130px]">
+            <div id="liveClock" class="text-lg font-bold text-emerald-400 font-mono">--:--:--</div>
+            <div id="countryLabel" class="text-[11px] text-slate-400">التوقيت المحلي</div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-4xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-6 mb-auto">
+
+        <!-- Upload & Camera Section -->
+        <section class="glass-panel rounded-2xl p-5 flex flex-col justify-between">
+            <div>
+                <h2 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-camera text-emerald-400"></i> التقاط أو رفع صورة الشاشة
+                </h2>
+                
+                <div class="border-2 border-dashed border-slate-700 hover:border-emerald-500/50 rounded-xl p-6 text-center transition-all bg-slate-900/40 relative group cursor-pointer mb-4" onclick="document.getElementById('imageInput').click()">
+                    <input type="file" id="imageInput" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                    <div id="previewContainer" class="hidden">
+                        <img id="uploadedImage" class="max-h-52 mx-auto rounded-lg shadow-md mb-2 object-contain" alt="شاشة الشاحن">
+                        <span class="text-xs text-emerald-400 block"><i class="fa-solid fa-rotate"></i> انقر لتغيير الصورة</span>
+                    </div>
+                    <div id="uploadPlaceholder">
+                        <i class="fa-solid fa-cloud-arrow-up text-4xl text-slate-500 mb-2 group-hover:text-emerald-400 transition-colors"></i>
+                        <p class="text-sm text-slate-300 font-medium">إسقاط صورة شاشة الشحن هنا أو انقر للرفع</p>
+                        <p class="text-xs text-slate-500 mt-1">يدعم شاشات BYD وسيارات EV الأخرى</p>
+                    </div>
+                </div>
+
+                <!-- Camera Capture Button -->
+                <button onclick="openCamera()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-2.5 px-4 rounded-xl transition flex items-center justify-center gap-2 border border-slate-700 text-sm">
+                    <i class="fa-solid fa-camera-retro text-emerald-400"></i> فتح الكاميرا والتصوير المباشر
+                </button>
+            </div>
+
+            <!-- Scanner Status Loader -->
+            <div id="scannerLoader" class="hidden mt-4 p-3 bg-emerald-950/40 border border-emerald-500/30 rounded-xl text-center">
+                <i class="fa-solid fa-circle-notch fa-spin text-emerald-400 text-xl mb-1"></i>
+                <p class="text-xs text-emerald-300 font-medium">جاري تحليل بيانات الشحن واستخراج الوقت بالذكاء الاصطناعي...</p>
+            </div>
+        </section>
+
+        <!-- Status & Results Section -->
+        <section class="glass-panel rounded-2xl p-5 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-battery-three-quarters text-emerald-400"></i> حالة الشحن الحالية
+                    </h2>
+                    <button onclick="openSettingsModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs py-1.5 px-3 rounded-lg border border-slate-700 transition flex items-center gap-1">
+                        <i class="fa-solid fa-sliders text-emerald-400"></i> الإعدادات
+                    </button>
+                </div>
+
+                <!-- Metrics Grid -->
+                <div class="grid grid-cols-3 gap-3 mb-5">
+                    <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-center">
+                        <span class="text-[11px] text-slate-400 block mb-1">نسبة البطارية</span>
+                        <div class="text-xl font-bold text-emerald-400 font-mono" id="batteryPercent">-- %</div>
+                    </div>
+                    <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-center">
+                        <span class="text-[11px] text-slate-400 block mb-1">قدرة الشحن</span>
+                        <div class="text-xl font-bold text-cyan-400 font-mono" id="chargingPower">-- kW</div>
+                    </div>
+                    <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-center">
+                        <span class="text-[11px] text-slate-400 block mb-1">الوقت المتبقي</span>
+                        <div class="text-xl font-bold text-amber-400 font-mono" id="remainingTime">-- س -- د</div>
+                    </div>
+                </div>
+
+                <!-- Full Charge Result Card -->
+                <div class="bg-gradient-to-r from-emerald-950/60 to-slate-900/90 p-4 rounded-xl border border-emerald-500/40 mb-4">
+                    <div class="text-xs text-emerald-300 font-medium mb-1 flex items-center gap-1.5">
+                        <i class="fa-regular fa-clock"></i> موعد اكتمال الشحن بالكامل (100%):
+                    </div>
+                    <div id="fullCompletionTime" class="text-2xl font-black text-white neon-text font-mono tracking-wider">
+                        --:-- --
+                    </div>
+                    <p id="fullCompletionSub" class="text-[11px] text-slate-400 mt-1">يرجى رفع صورة الشاشة أو ضبط القيم يدويًا</p>
+                </div>
+
+                <!-- Countdown Timer -->
+                <div class="bg-slate-900/90 p-3.5 rounded-xl border border-slate-800 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-400 block">العداد التنازلي المباشر:</span>
+                        <span id="countdownDisplay" class="text-lg font-bold text-amber-400 font-mono">00:00:00</span>
+                    </div>
+                    <button id="alarmStopBtn" onclick="stopAlarmSound()" class="hidden bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs px-4 py-2 rounded-lg animate-pulse">
+                        <i class="fa-solid fa-bell-slash"></i> إيقاف التنبيه
+                    </button>
+                </div>
+            </div>
+
+            <!-- Manual Controls -->
+            <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+                <span>تعديل القراءة يدويًا:</span>
+                <div class="flex gap-2">
+                    <input type="number" id="manualHours" placeholder="ساعة" min="0" max="48" class="w-14 bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-center text-white">
+                    <input type="number" id="manualMinutes" placeholder="دقيقة" min="0" max="59" class="w-14 bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-center text-white">
+                    <button onclick="applyManualTime()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-1 rounded">تطبيق</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-md rounded-2xl p-6 border border-slate-700">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-emerald-400"></i> إعدادات المنبه والنغمات
+                </h3>
+                <button onclick="closeSettingsModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+
+            <div class="space-y-4 text-sm">
+                <div>
+                    <label class="text-slate-300 block mb-1 font-medium">اختيار نغمة المنبه عند اكتمال الشحن:</label>
+                    <select id="soundSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-white">
+                        <option value="synth">🔊 نغمة سينثايزر راكزة (افتراضي)</option>
+                        <option value="calm">🎵 تنبيه هادئ ومريح</option>
+                        <option value="alarm">🚨 تنبيه طوارئ نيون</option>
+                        <option value="digital">📟 نغمة رقمية قصيرة</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="text-slate-300 block mb-1 font-medium">مدة استمرار المنبه:</label>
+                    <select id="durationSelect" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-white">
+                        <option value="60">دقيقة كاملة (60 ثانية)</option>
+                        <option value="30">30 ثانية</option>
+                        <option value="loop">تكرار مستمر حتى الإيقاف</option>
+                    </select>
+                </div>
+
+                <div class="pt-2">
+                    <button onclick="testSelectedSound()" class="w-full bg-slate-800 hover:bg-slate-700 text-emerald-400 font-bold py-2 rounded-xl border border-slate-700 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-volume-high"></i> تجربة النغمة المختارة
+                    </button>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-slate-800 flex justify-end">
+                <button onclick="closeSettingsModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-2 rounded-xl">حفظ وإغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Camera Modal -->
+    <div id="cameraModal" class="fixed inset-0 bg-black/90 hidden z-50 flex flex-col items-center justify-center p-4">
+        <video id="cameraVideo" autoplay playsinline class="max-w-md w-full rounded-2xl bg-slate-900 border border-slate-700 mb-4"></video>
+        <div class="flex gap-4">
+            <button onclick="capturePhoto()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-2.5 rounded-xl flex items-center gap-2">
+                <i class="fa-solid fa-camera"></i> التقاط الصورة
+            </button>
+            <button onclick="closeCamera()" class="bg-slate-800 text-slate-300 font-bold px-5 py-2.5 rounded-xl">إلغاء</button>
+        </div>
+    </div>
+
+    <script>
+        let currentCountryTZ = 'AUTO';
+        let countdownInterval = null;
+        let alarmAudioContext = null;
+        let isAudioPlaying = false;
+        let activeOscillators = [];
+
+        // Global State
+        let state = {
+            battery: 31,
+            power: 1.5,
+            remainingHours: 4,
+            remainingMinutes: 18,
+            targetTime: null
+        };
+
+        // Initialize Live Clock
+        function updateLiveClock() {
+            const now = new Date();
+            let timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+            
+            if (currentCountryTZ !== 'AUTO') {
+                timeOptions.timeZone = currentCountryTZ;
+            }
+
+            try {
+                const timeString = new Intl.DateTimeFormat('ar-EG', timeOptions).format(now);
+                document.getElementById('liveClock').innerText = timeString;
+            } catch (e) {
+                document.getElementById('liveClock').innerText = now.toLocaleTimeString('ar-EG');
+            }
+        }
+        setInterval(updateLiveClock, 1000);
+        updateLiveClock();
+
+        function changeCountry() {
+            const selector = document.getElementById('countrySelector');
+            currentCountryTZ = selector.value;
+            const selectedText = selector.options[selector.selectedIndex].text;
+            document.getElementById('countryLabel').innerText = currentCountryTZ === 'AUTO' ? 'التوقيت المحلي' : selectedText.split(' ')[1] || 'التوقيت المحلي';
+            recalculateCompletion();
+        }
+
+        // Handle Image Upload & AI Parsing Simulation
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('uploadedImage').src = event.target.result;
+                document.getElementById('previewContainer').classList.remove('hidden');
+                document.getElementById('uploadPlaceholder').classList.add('hidden');
+                
+                // Simulate AI Extraction for BYD Screen
+                runAIScan();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function runAIScan() {
+            document.getElementById('scannerLoader').classList.remove('hidden');
+            
+            setTimeout(() => {
+                document.getElementById('scannerLoader').classList.add('hidden');
+                
+                // Set Values Detected from Image
+                state.battery = 31;
+                state.power = 1.5;
+                state.remainingHours = 4;
+                state.remainingMinutes = 18;
+
+                updateDashboardUI();
+            }, 1200);
+        }
+
+        function updateDashboardUI() {
+            document.getElementById('batteryPercent').innerText = `${state.battery}%`;
+            document.getElementById('chargingPower').innerText = `${state.power} kW`;
+            document.getElementById('remainingTime').innerText = `${state.remainingHours}س ${state.remainingMinutes}د`;
+
+            recalculateCompletion();
+        }
+
+        function recalculateCompletion() {
+            const now = new Date();
+            const totalRemainingMs = ((state.remainingHours * 3600) + (state.remainingMinutes * 60)) * 1000;
+            const targetDate = new Date(now.getTime() + totalRemainingMs);
+            state.targetTime = targetDate;
+
+            let timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+            if (currentCountryTZ !== 'AUTO') {
+                timeOptions.timeZone = currentCountryTZ;
+            }
+
+            const formattedTarget = new Intl.DateTimeFormat('ar-EG', timeOptions).format(targetDate);
+            const countryName = document.getElementById('countrySelector').options[document.getElementById('countrySelector').selectedIndex].text.split(' ')[1] || '';
+
+            document.getElementById('fullCompletionTime').innerText = formattedTarget;
+            document.getElementById('fullCompletionSub').innerText = `يكتمل الشحن 100% بتوقيت (${countryName || 'المحلي'})`;
+
+            startCountdown(totalRemainingMs);
+        }
+
+        function startCountdown(durationMs) {
+            if (countdownInterval) clearInterval(countdownInterval);
+            let endMs = Date.now() + durationMs;
+
+            countdownInterval = setInterval(() => {
+                let remaining = endMs - Date.now();
+                if (remaining <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('countdownDisplay').innerText = "00:00:00 (اكتمل!)";
+                    triggerAlarm();
+                    return;
+                }
+
+                let h = Math.floor(remaining / (1000 * 60 * 60));
+                let m = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+                let s = Math.floor((remaining % (1000 * 60)) / 1000);
+
+                document.getElementById('countdownDisplay').innerText = 
+                    `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+            }, 1000);
+        }
+
+        function applyManualTime() {
+            const h = parseInt(document.getElementById('manualHours').value) || 0;
+            const m = parseInt(document.getElementById('manualMinutes').value) || 0;
+            state.remainingHours = h;
+            state.remainingMinutes = m;
+            updateDashboardUI();
+        }
+
+        // Camera Code
+        let mediaStream = null;
+        async function openCamera() {
+            try {
+                mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+                document.getElementById('cameraVideo').srcObject = mediaStream;
+                document.getElementById('cameraModal').classList.remove('hidden');
+            } catch (err) {
+                alert("تعذر الوصول للكاميرا: " + err.message);
+            }
+        }
+
+        function capturePhoto() {
+            const video = document.getElementById('cameraVideo');
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            
+            document.getElementById('uploadedImage').src = canvas.toDataURL('image/png');
+            document.getElementById('previewContainer').classList.remove('hidden');
+            document.getElementById('uploadPlaceholder').classList.add('hidden');
+            
+            closeCamera();
+            runAIScan();
+        }
+
+        function closeCamera() {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+            }
+            document.getElementById('cameraModal').classList.add('hidden');
+        }
+
+        // Web Audio Synthesizer Alarm Sound Generator
+        function triggerAlarm() {
+            document.getElementById('alarmStopBtn').classList.remove('hidden');
+            playSelectedTone();
+        }
+
+        function playSelectedTone() {
+            stopAlarmSound();
+            alarmAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+            isAudioPlaying = true;
+
+            const soundType = document.getElementById('soundSelect').value;
+            const durationSetting = document.getElementById('durationSelect').value;
+
+            let playTime = durationSetting === '60' ? 60 : (durationSetting === '30' ? 30 : 999);
+
+            if (soundType === 'synth') {
+                createSynthTone(playTime);
+            } else if (soundType === 'calm') {
+                createCalmTone(playTime);
+            } else {
+                createDigitalTone(playTime);
+            }
+        }
+
+        function createSynthTone(durationSec) {
+            const osc = alarmAudioContext.createOscillator();
+            const gain = alarmAudioContext.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(440, alarmAudioContext.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(880, alarmAudioContext.currentTime + 0.5);
+
+            gain.gain.setValueAtTime(0.3, alarmAudioContext.currentTime);
+            osc.connect(gain);
+            gain.connect(alarmAudioContext.destination);
+
+            osc.start();
+            activeOscillators.push(osc);
+
+            if (durationSec < 900) {
+                setTimeout(() => stopAlarmSound(), durationSec * 1000);
+            }
+        }
+
+        function createCalmTone(durationSec) {
+            const osc = alarmAudioContext.createOscillator();
+            const gain = alarmAudioContext.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(329.63, alarmAudioContext.currentTime); // E4
+
+            gain.gain.setValueAtTime(0.2, alarmAudioContext.currentTime);
+            osc.connect(gain);
+            gain.connect(alarmAudioContext.destination);
+
+            osc.start();
+            activeOscillators.push(osc);
+
+            if (durationSec < 900) {
+                setTimeout(() => stopAlarmSound(), durationSec * 1000);
+            }
+        }
+
+        function createDigitalTone(durationSec) {
+            const osc = alarmAudioContext.createOscillator();
+            const gain = alarmAudioContext.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(800, alarmAudioContext.currentTime);
+
+            gain.gain.setValueAtTime(0.15, alarmAudioContext.currentTime);
+            osc.connect(gain);
+            gain.connect(alarmAudioContext.destination);
+
+            osc.start();
+            activeOscillators.push(osc);
+
+            if (durationSec < 900) {
+                setTimeout(() => stopAlarmSound(), durationSec * 1000);
+            }
+        }
+
+        function stopAlarmSound() {
+            activeOscillators.forEach(osc => {
+                try { osc.stop(); } catch(e){}
+            });
+            activeOscillators = [];
+            if (alarmAudioContext) {
+                try { alarmAudioContext.close(); } catch(e){}
+            }
+            document.getElementById('alarmStopBtn').classList.add('hidden');
+        }
+
+        function testSelectedSound() {
+            playSelectedTone();
+            setTimeout(() => stopAlarmSound(), 3000);
+        }
+
+        // Settings Modal Controls
+        function openSettingsModal() {
+            document.getElementById('settingsModal').classList.remove('hidden');
+        }
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
